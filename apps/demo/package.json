@@ -1,0 +1,27 @@
+{
+  "name": "@shiji/demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@shiji/widget": "workspace:*",
+    "draggabilly": "^3.0.0",
+    "gsap": "^3.14.2",
+    "motion": "^12.34.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/draggabilly": "^3.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.7.0",
+    "vite": "^6.1.0"
+  }
+}

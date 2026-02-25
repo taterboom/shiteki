@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shiji Demo</title>
+    <style>
+      :root {
+        --bg-img: url(https://images.unsplash.com/photo-1536147116438-62679a5e01f2?w=1920);
+        --btn-lg-radius: 60px;
+        --btn-width: 300px;
+        --btn-height: 56px;
+        --btn-content-bg: hsl(0 100% 100% / 15%);
+        --liquid-glass-button: url(#liquid-glass-button) brightness(150%);
+        --bg-overlay: hsl(0 0 0 / 25%);
+
+      }
+      body {
+        background: var(--bg-img);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

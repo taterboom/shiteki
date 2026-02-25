@@ -1,0 +1,346 @@
+/* ── Root ── */
+.shiji-root {
+  --shiji-primary: #2563eb;
+  --shiji-primary-hover: #1d4ed8;
+  --shiji-bg: #ffffff;
+  --shiji-border: #e5e7eb;
+  --shiji-text: #111827;
+  --shiji-text-secondary: #6b7280;
+  --shiji-radius: 12px;
+  --shiji-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+
+  /* Liquid Glass */
+  --shiji-glass: rgba(255, 255, 255, 0.55);
+  --shiji-glass-border: rgba(255, 255, 255, 0.35);
+  --shiji-glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--shiji-text);
+  box-sizing: border-box;
+}
+
+/* ── Toolbar (always rendered, morphs between collapsed / expanded) ── */
+.shiji-toolbar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  border-radius: 9999px;
+  z-index: 99999;
+  background: var(--shiji-glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: url(#shiji-liquid-glass) brightness(150%);
+  border: 0.5px solid var(--shiji-glass-border);
+  box-shadow: var(--shiji-glass-shadow);
+}
+
+.shiji-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--shiji-text);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.shiji-toolbar-btn:hover {
+  background: #f3f4f6;
+}
+
+.shiji-toolbar-btn:active {
+  transform: scale(0.9);
+}
+
+.shiji-toolbar-btn--active {
+  background: var(--shiji-primary);
+  color: #fff;
+}
+
+.shiji-toolbar-btn--active:hover {
+  background: var(--shiji-primary-hover);
+}
+
+.shiji-toolbar-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.shiji-toolbar-picker {
+  position: relative;
+}
+
+.shiji-toolbar-badge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.shiji-toolbar-sep {
+  width: 1px;
+  height: 24px;
+  background: var(--shiji-border);
+  margin: 0 4px;
+}
+
+/* ── Element Highlight ── */
+.shiji-highlight {
+  position: fixed;
+  pointer-events: none;
+  border: 1px solid var(--shiji-primary, #2563eb);
+  background: rgba(37, 99, 235, 0.08);
+  /* border-radius: 4px; */
+  z-index: 99997;
+  transition: all 0.05s ease-out;
+  box-sizing: border-box;
+}
+
+/* ── Annotation Marker ── */
+.shiji-marker {
+  position: fixed;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--shiji-primary, #2563eb);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 99998;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  user-select: none;
+}
+
+/* ── Annotation Popover ── */
+.shiji-popover {
+  position: fixed;
+  width: 320px;
+  background: var(--shiji-glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: url(#shiji-liquid-glass) brightness(150%);
+  border: 1px solid var(--shiji-glass-border);
+  border-radius: var(--shiji-radius);
+  box-shadow: var(--shiji-glass-shadow);
+  z-index: 99999;
+  overflow: hidden;
+}
+
+.shiji-popover-info {
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid var(--shiji-border);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.shiji-popover-tag {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--shiji-primary);
+  white-space: nowrap;
+}
+
+.shiji-popover-text {
+  font-size: 12px;
+  color: var(--shiji-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shiji-popover-form {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shiji-popover-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--shiji-border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--shiji-text);
+  background: transparent;
+  outline: none;
+  resize: vertical;
+  min-height: 60px;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.shiji-popover-textarea:focus {
+  border-color: var(--shiji-primary);
+}
+
+.shiji-popover-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ── Buttons ── */
+.shiji-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.shiji-btn:active {
+  transform: scale(0.95);
+}
+
+.shiji-btn--primary {
+  background: var(--shiji-primary);
+  color: #fff;
+}
+
+.shiji-btn--primary:hover:not(:disabled) {
+  background: var(--shiji-primary-hover);
+}
+
+.shiji-btn--primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.shiji-btn--ghost {
+  background: transparent;
+  color: var(--shiji-text-secondary);
+}
+
+.shiji-btn--ghost:hover {
+  background: #f3f4f6;
+}
+
+/* ── Status Message (Toast) ── */
+.shiji-status {
+  position: fixed;
+  bottom: 76px;
+  right: 20px;
+  padding: 8px 18px;
+  background: var(--shiji-glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: url(#shiji-liquid-glass) brightness(150%);
+  border: 0.5px solid var(--shiji-glass-border);
+  border-radius: 8px;
+  box-shadow: var(--shiji-glass-shadow);
+  font-size: 13px;
+  white-space: nowrap;
+  z-index: 99998;
+}
+
+.shiji-status--success {
+  color: #059669;
+}
+
+.shiji-status--error {
+  color: #dc2626;
+}
+
+.shiji-status a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* ── Settings Panel ── */
+.shiji-settings {
+  position: fixed;
+  bottom: 76px;
+  right: 20px;
+  width: 280px;
+  background: var(--shiji-glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: url(#shiji-liquid-glass) brightness(150%);
+  border: 0.5px solid var(--shiji-glass-border);
+  border-radius: var(--shiji-radius);
+  box-shadow: var(--shiji-glass-shadow);
+  z-index: 99999;
+  overflow: hidden;
+}
+
+.shiji-settings-header {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--shiji-border);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.shiji-settings-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shiji-settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.shiji-settings-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--shiji-text-secondary);
+}
+
+.shiji-settings-input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--shiji-border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--shiji-text);
+  background: transparent;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.shiji-settings-input:focus {
+  border-color: var(--shiji-primary);
+}
+
+.shiji-settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 14px 12px;
+}
