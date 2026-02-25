@@ -14,6 +14,7 @@ import { AnnotationPopover } from "./AnnotationPopover";
 import { AnnotationMarkers } from "./AnnotationMarkers";
 import { StatusMessage } from "./StatusMessage";
 import { SettingsPanel } from "./SettingsPanel";
+import { SendDialog } from "./SendDialog";
 import { LiquidGlassFilter } from "./LiquidGlassFilter";
 import "../styles/widget.css";
 
@@ -22,6 +23,7 @@ export function ShijiWidget(props: ShijiConfig) {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<WidgetMode>("idle");
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [sendDialogOpen, setSendDialogOpen] = useState(false);
   const [selectedElement, setSelectedElement] = useState<ElementInfo | null>(null);
   const { annotations, add, remove, clear } = useAnnotations();
   const { state: submitState, submit, reset: resetSubmit } = useSubmit(config);
@@ -75,10 +77,21 @@ export function ShijiWidget(props: ShijiConfig) {
   }, [annotations, copy]);
 
   const handleSend = useCallback(() => {
-    const prompt = generatePrompt(annotations);
-    const title = `Visual Annotations (${annotations.length}) — ${document.title || location.href}`;
-    submit(title, prompt);
-  }, [annotations, submit]);
+    setSendDialogOpen(true);
+  }, []);
+
+  const handleSendConfirm = useCallback(
+    (title: string) => {
+      const prompt = generatePrompt(annotations);
+      submit(title, prompt);
+      setSendDialogOpen(false);
+    },
+    [annotations, submit]
+  );
+
+  const handleSendCancel = useCallback(() => {
+    setSendDialogOpen(false);
+  }, []);
 
   const handleClear = useCallback(() => {
     clear();
@@ -151,6 +164,15 @@ export function ShijiWidget(props: ShijiConfig) {
                 config={config}
                 onSave={handleSettingsSave}
                 onCancel={handleSettingsCancel}
+              />
+            )}
+            {sendDialogOpen && (
+              <SendDialog
+                key="send-dialog"
+                defaultTitle={`Visual Annotations (${annotations.length}) — ${document.title || location.href}`}
+                sending={submitState.status === "loading"}
+                onConfirm={handleSendConfirm}
+                onCancel={handleSendCancel}
               />
             )}
           </AnimatePresence>

@@ -19,13 +19,15 @@ function autoMount() {
   const script = document.currentScript as HTMLScriptElement | null;
   if (!script) return;
 
-  const endpoint = script.dataset.endpoint;
   const owner = script.dataset.owner;
   const repo = script.dataset.repo;
-  if (!endpoint || !owner || !repo) return;
+  if (!owner || !repo) return;
 
+  const endpoint = script.dataset.endpoint ?? "";
+  const githubToken = script.dataset.githubToken ?? "";
+  const mode = script.dataset.mode === "direct" ? "direct" as const : "endpoint" as const;
   const labels = script.dataset.labels?.split(",").map((l) => l.trim()).filter(Boolean);
-  mount({ endpoint, owner, repo, labels });
+  mount({ mode, endpoint, githubToken, owner, repo, labels });
 }
 
 if (typeof document !== "undefined") {

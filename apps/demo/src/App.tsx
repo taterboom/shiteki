@@ -214,7 +214,9 @@ export function App() {
       </main>
 
       <ShijiWidget
+        mode="endpoint"
         endpoint="http://localhost:8787"
+        githubToken=""
         owner="taterboom"
         repo="shiji"
         labels={["annotation"]}

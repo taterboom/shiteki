@@ -1,5 +1,7 @@
 export interface ShijiConfig {
+  mode: "endpoint" | "direct";
   endpoint: string;
+  githubToken: string;
   owner: string;
   repo: string;
   labels?: string[];

@@ -1,6 +1,52 @@
 import { useCallback, useState } from "react";
 import { ShijiConfig, SubmitState } from "../types";
 
+const SHIJI_FOOTER = "\n\n---\n*Submitted via [Shiji](https://github.com/taterboom/shiji)*";
+
+async function submitViaEndpoint(config: ShijiConfig, title: string, body: string) {
+  const res = await fetch(`${config.endpoint}/actions/send`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      owner: config.owner,
+      repo: config.repo,
+      data: { title, body, labels: config.labels },
+    }),
+  });
+  const json = await res.json();
+  if (!res.ok || !json.success) {
+    throw new Error(json.error ?? "Failed to submit");
+  }
+  return { issueUrl: json.issueUrl as string, issueNumber: json.issueNumber as number };
+}
+
+async function submitDirect(config: ShijiConfig, title: string, body: string) {
+  const issueBody = body + SHIJI_FOOTER;
+  const res = await fetch(
+    `https://api.github.com/repos/${config.owner}/${config.repo}/issues`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${config.githubToken}`,
+        Accept: "application/vnd.github+json",
+        "User-Agent": "shiji-widget",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        body: issueBody,
+        labels: config.labels,
+      }),
+    }
+  );
+  if (!res.ok) {
+    const json = await res.json().catch(() => null);
+    throw new Error(json?.message ?? `GitHub API error (${res.status})`);
+  }
+  const json = await res.json();
+  return { issueUrl: json.html_url as string, issueNumber: json.number as number };
+}
+
 export function useSubmit(config: ShijiConfig) {
   const [state, setState] = useState<SubmitState>({ status: "idle" });
 
@@ -8,27 +54,11 @@ export function useSubmit(config: ShijiConfig) {
     async (title: string, body: string) => {
       setState({ status: "loading" });
       try {
-        const res = await fetch(`${config.endpoint}/actions/send`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            owner: config.owner,
-            repo: config.repo,
-            data: {
-              title,
-              body,
-              labels: config.labels,
-            },
-          }),
-        });
-        const json = await res.json();
-        if (!res.ok || !json.success) {
-          throw new Error(json.error ?? "Failed to submit");
-        }
-        setState({
-          status: "success",
-          result: { issueUrl: json.issueUrl, issueNumber: json.issueNumber },
-        });
+        const result =
+          config.mode === "direct"
+            ? await submitDirect(config, title, body)
+            : await submitViaEndpoint(config, title, body);
+        setState({ status: "success", result });
       } catch (err) {
         setState({
           status: "error",
@@ -36,7 +66,7 @@ export function useSubmit(config: ShijiConfig) {
         });
       }
     },
-    [config.endpoint, config.owner, config.repo, config.labels]
+    [config.mode, config.endpoint, config.githubToken, config.owner, config.repo, config.labels]
   );
 
   const reset = useCallback(() => setState({ status: "idle" }), []);

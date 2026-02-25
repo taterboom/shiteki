@@ -15,7 +15,9 @@ function readStored(): Partial<ShijiConfig> | null {
 function merge(defaults: ShijiConfig, stored: Partial<ShijiConfig> | null): ShijiConfig {
   if (!stored) return defaults;
   return {
+    mode: stored.mode || defaults.mode,
     endpoint: stored.endpoint || defaults.endpoint,
+    githubToken: stored.githubToken || defaults.githubToken,
     owner: stored.owner || defaults.owner,
     repo: stored.repo || defaults.repo,
     labels: stored.labels ?? defaults.labels,

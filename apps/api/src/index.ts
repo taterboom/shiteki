@@ -34,6 +34,7 @@ export default {
           jsonResponse({ success: true, issueUrl: issue.html_url, issueNumber: issue.number }, 201)
         );
       } catch (err) {
+        console.log("🔴",err)
         const message = err instanceof Error ? err.message : "Internal server error";
         return withCors(jsonResponse({ success: false, error: message }, 500));
       }

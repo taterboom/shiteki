@@ -338,6 +338,25 @@
   border-color: var(--shiji-primary);
 }
 
+.shiji-radio-group {
+  display: flex;
+  gap: 12px;
+}
+
+.shiji-radio {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.shiji-radio input[type="radio"] {
+  margin: 0;
+  accent-color: var(--shiji-primary);
+  cursor: pointer;
+}
+
 .shiji-settings-actions {
   display: flex;
   justify-content: flex-end;
