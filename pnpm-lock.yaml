@@ -19,7 +19,7 @@ importers:
 
   apps/demo:
     dependencies:
-      '@shiji/widget':
+      '@taterboom/shiteki':
         specifier: workspace:*
         version: link:../../packages/widget
       draggabilly:

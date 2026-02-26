@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import { ShijiConfig } from "../types";
+import { ShitekiConfig } from "../types";
 
-const STORAGE_KEY = "shiji:config";
+const STORAGE_KEY = "shiteki:config";
 
-function readStored(): Partial<ShijiConfig> | null {
+function readStored(): Partial<ShitekiConfig> | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : null;
@@ -12,7 +12,7 @@ function readStored(): Partial<ShijiConfig> | null {
   }
 }
 
-function merge(defaults: ShijiConfig, stored: Partial<ShijiConfig> | null): ShijiConfig {
+function merge(defaults: ShitekiConfig, stored: Partial<ShitekiConfig> | null): ShitekiConfig {
   if (!stored) return defaults;
   return {
     mode: stored.mode || defaults.mode,
@@ -24,11 +24,11 @@ function merge(defaults: ShijiConfig, stored: Partial<ShijiConfig> | null): Shij
   };
 }
 
-export function useConfig(defaults: ShijiConfig) {
-  const [config, setConfig] = useState<ShijiConfig>(() => merge(defaults, readStored()));
+export function useConfig(defaults: ShitekiConfig) {
+  const [config, setConfig] = useState<ShitekiConfig>(() => merge(defaults, readStored()));
 
   const updateConfig = useCallback(
-    (partial: Partial<ShijiConfig>) => {
+    (partial: Partial<ShitekiConfig>) => {
       setConfig((prev) => {
         const next = { ...prev, ...partial };
         try {

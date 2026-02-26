@@ -1,3 +1,3 @@
-name = "shiji-api"
+name = "shiteki-api"
 main = "src/index.ts"
 compatibility_date = "2025-02-14"

@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import { ShijiConfig, SubmitState } from "../types";
+import { ShitekiConfig, SubmitState } from "../types";
 
-const SHIJI_FOOTER = "\n\n---\n*Submitted via [Shiji](https://github.com/taterboom/shiji)*";
+const SHITEKI_FOOTER = "\n\n---\n*Submitted via [Shiteki](https://github.com/taterboom/shiteki)*";
 
-async function submitViaEndpoint(config: ShijiConfig, title: string, body: string) {
+async function submitViaEndpoint(config: ShitekiConfig, title: string, body: string) {
   const res = await fetch(`${config.endpoint}/actions/send`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -20,8 +20,8 @@ async function submitViaEndpoint(config: ShijiConfig, title: string, body: strin
   return { issueUrl: json.issueUrl as string, issueNumber: json.issueNumber as number };
 }
 
-async function submitDirect(config: ShijiConfig, title: string, body: string) {
-  const issueBody = body + SHIJI_FOOTER;
+async function submitDirect(config: ShitekiConfig, title: string, body: string) {
+  const issueBody = body + SHITEKI_FOOTER;
   const res = await fetch(
     `https://api.github.com/repos/${config.owner}/${config.repo}/issues`,
     {
@@ -29,7 +29,7 @@ async function submitDirect(config: ShijiConfig, title: string, body: string) {
       headers: {
         Authorization: `Bearer ${config.githubToken}`,
         Accept: "application/vnd.github+json",
-        "User-Agent": "shiji-widget",
+        "User-Agent": "shiteki-widget",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -47,7 +47,7 @@ async function submitDirect(config: ShijiConfig, title: string, body: string) {
   return { issueUrl: json.html_url as string, issueNumber: json.number as number };
 }
 
-export function useSubmit(config: ShijiConfig) {
+export function useSubmit(config: ShitekiConfig) {
   const [state, setState] = useState<SubmitState>({ status: "idle" });
 
   const submit = useCallback(

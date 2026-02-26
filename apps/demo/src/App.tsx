@@ -1,4 +1,4 @@
-import { ShijiWidget } from "@shiji/widget";
+import { ShitekiWidget } from "@taterboom/shiteki";
 
 export function App() {
   return (
@@ -12,27 +12,49 @@ export function App() {
         }}
       >
         <h1 id="hero-title" style={{ fontSize: 40, margin: 0 }}>
-          Shiji Annotation Demo
+          Shiteki Annotation Demo
         </h1>
         <p style={{ color: "#6b7280", fontSize: 18, marginTop: 12 }}>
-          Click the crosshair in the toolbar below, then click any element to annotate it.
+          Visual annotation widget for web feedback. Click elements, add comments, send as GitHub Issues.
         </p>
-        <button
-          data-testid="hero-cta"
-          style={{
-            marginTop: 24,
-            padding: "12px 32px",
-            fontSize: 16,
-            fontWeight: 600,
-            border: "none",
-            borderRadius: 8,
-            background: "#2563eb",
-            color: "#fff",
-            cursor: "pointer",
-          }}
-        >
-          Get Started
-        </button>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 24 }}>
+          <a
+            href="https://www.npmjs.com/package/@taterboom/shiteki"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              padding: "12px 32px",
+              fontSize: 16,
+              fontWeight: 600,
+              border: "none",
+              borderRadius: 8,
+              background: "#2563eb",
+              color: "#fff",
+              cursor: "pointer",
+              textDecoration: "none",
+            }}
+          >
+            Get Started
+          </a>
+          <a
+            href="https://github.com/taterboom/shiteki"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              padding: "12px 32px",
+              fontSize: 16,
+              fontWeight: 600,
+              border: "1px solid #d1d5db",
+              borderRadius: 8,
+              background: "#fff",
+              color: "#111827",
+              cursor: "pointer",
+              textDecoration: "none",
+            }}
+          >
+            GitHub
+          </a>
+        </div>
       </header>
 
       {/* Content */}
@@ -66,6 +88,58 @@ export function App() {
               >
                 <h3 style={{ margin: "0 0 8px" }}>{f.title}</h3>
                 <p style={{ margin: 0, color: "#6b7280", fontSize: 14 }}>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+         {/* Keyboard shortcuts */}
+        <section style={{ marginTop: 48 }}>
+          <h2>Keyboard Shortcuts</h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+              gap: 12,
+              marginTop: 16,
+            }}
+          >
+            {[
+              { key: "X", desc: "Toggle" },
+              { key: "C", desc: "Copy" },
+              { key: "S", desc: "Send as Issue" },
+              { key: "DD", desc: "Clear all" },
+              { key: "Esc", desc: "Close" },
+            ].map((s) => (
+              <div
+                key={s.key}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  padding: "10px 14px",
+                  background: "#f9fafb",
+                  borderRadius: 8,
+                  border: "1px solid #e5e7eb",
+                }}
+              >
+                <kbd
+                  style={{
+                    display: "inline-block",
+                    padding: "2px 8px",
+                    background: "#fff",
+                    border: "1px solid #d1d5db",
+                    borderRadius: 4,
+                    fontFamily: "ui-monospace, SFMono-Regular, monospace",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    minWidth: 28,
+                    textAlign: "center",
+                  }}
+                >
+                  {s.key}
+                </kbd>
+                <span style={{ fontSize: 14, color: "#6b7280" }}>{s.desc}</span>
               </div>
             ))}
           </div>
@@ -213,13 +287,13 @@ export function App() {
         </section>
       </main>
 
-      <ShijiWidget
+      <ShitekiWidget
         mode="endpoint"
-        endpoint="http://localhost:8787"
+        endpoint="https://shiteki-api.xuebagod.workers.dev"
         githubToken=""
         owner="taterboom"
-        repo="shiji"
-        labels={["annotation"]}
+        repo="shiteki"
+        labels={["demo"]}
       />
     </div>
   );

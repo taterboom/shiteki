@@ -1,5 +1,5 @@
 {
-  "name": "@shiji/api",
+  "name": "shiteki-api",
   "private": true,
   "scripts": {
     "dev": "wrangler dev",

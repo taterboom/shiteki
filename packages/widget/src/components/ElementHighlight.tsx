@@ -9,12 +9,12 @@ export function ElementHighlight({ rect }: ElementHighlightProps) {
 
   return (
     <div
-      className="shiji-highlight"
+      className="shiteki-highlight"
       style={{
-        top: rect.top - 1,
-        left: rect.left - 1,
-        width: rect.width + 2,
-        height: rect.height + 2,
+        top: rect.top - 1.5,
+        left: rect.left - 1.5,
+        width: rect.width + 3,
+        height: rect.height + 3,
       }}
     />
   );

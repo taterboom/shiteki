@@ -1,6 +1,6 @@
-# Shiji API
+# Shiteki API
 
-Cloudflare Worker that creates GitHub Issues from the Shiji widget.
+Cloudflare Worker that creates GitHub Issues from the Shiteki widget.
 
 ## Setup
 
@@ -9,9 +9,9 @@ Cloudflare Worker that creates GitHub Issues from the Shiji widget.
 1. Go to [github.com/settings/tokens?type=beta](https://github.com/settings/tokens?type=beta) (Fine-grained tokens)
 2. Click **"Generate new token"**
 3. Configure:
-   - **Token name**: `shiji-api` (or any name)
+   - **Token name**: `shiteki-api` (or any name)
    - **Expiration**: choose as needed
-   - **Repository access**: select **"Only select repositories"**, then pick the repo(s) you want Shiji to create issues in
+   - **Repository access**: select **"Only select repositories"**, then pick the repo(s) you want Shiteki to create issues in
    - **Permissions** → **Repository permissions** → **Issues**: set to **Read and write**
 4. Click **"Generate token"** and copy the token (starts with `github_pat_...`)
 
@@ -53,7 +53,7 @@ Creates a GitHub Issue.
 ```json
 {
   "owner": "taterboom",
-  "repo": "shiji",
+  "repo": "shiteki",
   "data": {
     "title": "Bug: button misaligned",
     "body": "The submit button overflows on mobile.",
@@ -67,7 +67,7 @@ Creates a GitHub Issue.
 ```json
 {
   "success": true,
-  "issueUrl": "https://github.com/taterboom/shiji/issues/1",
+  "issueUrl": "https://github.com/taterboom/shiteki/issues/1",
   "issueNumber": 1
 }
 ```

@@ -1,6 +1,6 @@
-export { ShijiWidget } from "./components/ShijiWidget";
+export { ShitekiWidget } from "./components/ShitekiWidget";
 export type {
-  ShijiConfig,
+  ShitekiConfig,
   ElementInfo,
   Annotation,
   WidgetMode,

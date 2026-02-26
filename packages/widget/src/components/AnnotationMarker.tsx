@@ -12,7 +12,7 @@ interface AnnotationMarkerProps {
 export function AnnotationMarker({ id, top, left, onRemove }: AnnotationMarkerProps) {
   return (
     <motion.div
-      className="shiji-marker"
+      className="shiteki-marker"
       style={{ top: top - 10, left: left - 10 }}
       title={`Annotation #${id} (click to remove)`}
       onClick={() => onRemove(id)}

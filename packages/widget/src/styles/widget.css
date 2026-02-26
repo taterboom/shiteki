@@ -1,28 +1,23 @@
 /* ── Root ── */
-.shiji-root {
-  --shiji-primary: #2563eb;
-  --shiji-primary-hover: #1d4ed8;
-  --shiji-bg: #ffffff;
-  --shiji-border: #e5e7eb;
-  --shiji-text: #111827;
-  --shiji-text-secondary: #6b7280;
-  --shiji-radius: 12px;
-  --shiji-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
-
-  /* Liquid Glass */
-  --shiji-glass: rgba(255, 255, 255, 0.55);
-  --shiji-glass-border: rgba(255, 255, 255, 0.35);
-  --shiji-glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+.shiteki-root {
+  --shiteki-primary: #2563eb;
+  --shiteki-primary-hover: #1d4ed8;
+  --shiteki-bg: #ffffff;
+  --shiteki-border: #e5e7eb;
+  --shiteki-text: #111827;
+  --shiteki-text-secondary: #6b7280;
+  --shiteki-radius: 12px;
+  --shiteki-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: var(--shiji-text);
+  color: var(--shiteki-text);
   box-sizing: border-box;
 }
 
 /* ── Toolbar (always rendered, morphs between collapsed / expanded) ── */
-.shiji-toolbar {
+.shiteki-toolbar {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -30,14 +25,12 @@
   align-items: center;
   border-radius: 9999px;
   z-index: 99999;
-  background: var(--shiji-glass);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: url(#shiji-liquid-glass) brightness(150%);
-  border: 0.5px solid var(--shiji-glass-border);
-  box-shadow: var(--shiji-glass-shadow);
+  background: var(--shiteki-bg);
+  border: 1px solid var(--shiteki-border);
+  box-shadow: var(--shiteki-shadow);
 }
 
-.shiji-toolbar-btn {
+.shiteki-toolbar-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,38 +39,38 @@
   border: none;
   border-radius: 50%;
   background: transparent;
-  color: var(--shiji-text);
+  color: var(--shiteki-text);
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
 
-.shiji-toolbar-btn:hover {
+.shiteki-toolbar-btn:hover {
   background: #f3f4f6;
 }
 
-.shiji-toolbar-btn:active {
+.shiteki-toolbar-btn:active {
   transform: scale(0.9);
 }
 
-.shiji-toolbar-btn--active {
-  background: var(--shiji-primary);
+.shiteki-toolbar-btn--active {
+  background: var(--shiteki-primary);
   color: #fff;
 }
 
-.shiji-toolbar-btn--active:hover {
-  background: var(--shiji-primary-hover);
+.shiteki-toolbar-btn--active:hover {
+  background: var(--shiteki-primary-hover);
 }
 
-.shiji-toolbar-btn:disabled {
+.shiteki-toolbar-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.shiji-toolbar-picker {
+.shiteki-toolbar-picker {
   position: relative;
 }
 
-.shiji-toolbar-badge {
+.shiteki-toolbar-badge {
   position: absolute;
   top: -4px;
   right: -6px;
@@ -97,18 +90,18 @@
   box-sizing: border-box;
 }
 
-.shiji-toolbar-sep {
+.shiteki-toolbar-sep {
   width: 1px;
   height: 24px;
-  background: var(--shiji-border);
+  background: var(--shiteki-border);
   margin: 0 4px;
 }
 
 /* ── Element Highlight ── */
-.shiji-highlight {
+.shiteki-highlight {
   position: fixed;
   pointer-events: none;
-  border: 1px solid var(--shiji-primary, #2563eb);
+  border: 1.5px solid var(--shiteki-primary, #2563eb);
   background: rgba(37, 99, 235, 0.08);
   /* border-radius: 4px; */
   z-index: 99997;
@@ -117,12 +110,12 @@
 }
 
 /* ── Annotation Marker ── */
-.shiji-marker {
+.shiteki-marker {
   position: fixed;
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: var(--shiji-primary, #2563eb);
+  background: var(--shiteki-primary, #2563eb);
   color: #fff;
   font-size: 11px;
   font-weight: 700;
@@ -136,60 +129,58 @@
 }
 
 /* ── Annotation Popover ── */
-.shiji-popover {
+.shiteki-popover {
   position: fixed;
   width: 320px;
-  background: var(--shiji-glass);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: url(#shiji-liquid-glass) brightness(150%);
-  border: 1px solid var(--shiji-glass-border);
-  border-radius: var(--shiji-radius);
-  box-shadow: var(--shiji-glass-shadow);
+  background: var(--shiteki-bg);
+  border: 1px solid var(--shiteki-border);
+  border-radius: var(--shiteki-radius);
+  box-shadow: var(--shiteki-shadow);
   z-index: 99999;
   overflow: hidden;
 }
 
-.shiji-popover-info {
+.shiteki-popover-info {
   padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.5);
-  border-bottom: 1px solid var(--shiji-border);
+  background: #f9fafb;
+  border-bottom: 1px solid var(--shiteki-border);
   display: flex;
   align-items: baseline;
   gap: 8px;
   overflow: hidden;
 }
 
-.shiji-popover-tag {
+.shiteki-popover-tag {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
   font-size: 12px;
   font-weight: 600;
-  color: var(--shiji-primary);
+  color: var(--shiteki-primary);
   white-space: nowrap;
 }
 
-.shiji-popover-text {
+.shiteki-popover-text {
   font-size: 12px;
-  color: var(--shiji-text-secondary);
+  color: var(--shiteki-text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.shiji-popover-form {
+.shiteki-popover-form {
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.shiji-popover-textarea {
+.shiteki-popover-textarea {
   width: 100%;
   padding: 8px 10px;
-  border: 1px solid var(--shiji-border);
+  border: 1px solid var(--shiteki-border);
   border-radius: 8px;
   font: inherit;
   font-size: 13px;
-  color: var(--shiji-text);
+  color: var(--shiteki-text);
   background: transparent;
   outline: none;
   resize: vertical;
@@ -198,18 +189,18 @@
   transition: border-color 0.15s;
 }
 
-.shiji-popover-textarea:focus {
-  border-color: var(--shiji-primary);
+.shiteki-popover-textarea:focus {
+  border-color: var(--shiteki-primary);
 }
 
-.shiji-popover-actions {
+.shiteki-popover-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
 }
 
 /* ── Buttons ── */
-.shiji-btn {
+.shiteki-btn {
   padding: 6px 14px;
   border: none;
   border-radius: 8px;
@@ -220,130 +211,126 @@
   transition: background 0.15s;
 }
 
-.shiji-btn:active {
+.shiteki-btn:active {
   transform: scale(0.95);
 }
 
-.shiji-btn--primary {
-  background: var(--shiji-primary);
+.shiteki-btn--primary {
+  background: var(--shiteki-primary);
   color: #fff;
 }
 
-.shiji-btn--primary:hover:not(:disabled) {
-  background: var(--shiji-primary-hover);
+.shiteki-btn--primary:hover:not(:disabled) {
+  background: var(--shiteki-primary-hover);
 }
 
-.shiji-btn--primary:disabled {
+.shiteki-btn--primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.shiji-btn--ghost {
+.shiteki-btn--ghost {
   background: transparent;
-  color: var(--shiji-text-secondary);
+  color: var(--shiteki-text-secondary);
 }
 
-.shiji-btn--ghost:hover {
+.shiteki-btn--ghost:hover {
   background: #f3f4f6;
 }
 
 /* ── Status Message (Toast) ── */
-.shiji-status {
+.shiteki-status {
   position: fixed;
   bottom: 76px;
   right: 20px;
   padding: 8px 18px;
-  background: var(--shiji-glass);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: url(#shiji-liquid-glass) brightness(150%);
-  border: 0.5px solid var(--shiji-glass-border);
+  background: var(--shiteki-bg);
+  border: 1px solid var(--shiteki-border);
   border-radius: 8px;
-  box-shadow: var(--shiji-glass-shadow);
+  box-shadow: var(--shiteki-shadow);
   font-size: 13px;
   white-space: nowrap;
   z-index: 99998;
 }
 
-.shiji-status--success {
+.shiteki-status--success {
   color: #059669;
 }
 
-.shiji-status--error {
+.shiteki-status--error {
   color: #dc2626;
 }
 
-.shiji-status a {
+.shiteki-status a {
   color: inherit;
   text-decoration: underline;
 }
 
 /* ── Settings Panel ── */
-.shiji-settings {
+.shiteki-settings {
   position: fixed;
   bottom: 76px;
   right: 20px;
   width: 280px;
-  background: var(--shiji-glass);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: url(#shiji-liquid-glass) brightness(150%);
-  border: 0.5px solid var(--shiji-glass-border);
-  border-radius: var(--shiji-radius);
-  box-shadow: var(--shiji-glass-shadow);
+  background: var(--shiteki-bg);
+  border: 1px solid var(--shiteki-border);
+  border-radius: var(--shiteki-radius);
+  box-shadow: var(--shiteki-shadow);
   z-index: 99999;
   overflow: hidden;
 }
 
-.shiji-settings-header {
+.shiteki-settings-header {
   padding: 10px 14px;
   font-size: 13px;
   font-weight: 600;
-  border-bottom: 1px solid var(--shiji-border);
-  background: rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid var(--shiteki-border);
+  background: #f9fafb;
 }
 
-.shiji-settings-body {
+.shiteki-settings-body {
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.shiji-settings-field {
+.shiteki-settings-field {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.shiji-settings-label {
+.shiteki-settings-label {
   font-size: 12px;
   font-weight: 500;
-  color: var(--shiji-text-secondary);
+  color: var(--shiteki-text-secondary);
 }
 
-.shiji-settings-input {
+.shiteki-settings-input {
   width: 100%;
   padding: 6px 8px;
-  border: 1px solid var(--shiji-border);
+  border: 1px solid var(--shiteki-border);
   border-radius: 8px;
   font: inherit;
   font-size: 13px;
-  color: var(--shiji-text);
+  color: var(--shiteki-text);
   background: transparent;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.15s;
 }
 
-.shiji-settings-input:focus {
-  border-color: var(--shiji-primary);
+.shiteki-settings-input:focus {
+  border-color: var(--shiteki-primary);
 }
 
-.shiji-radio-group {
+.shiteki-radio-group {
   display: flex;
   gap: 12px;
 }
 
-.shiji-radio {
+.shiteki-radio {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -351,15 +338,73 @@
   cursor: pointer;
 }
 
-.shiji-radio input[type="radio"] {
+.shiteki-radio input[type="radio"] {
   margin: 0;
-  accent-color: var(--shiji-primary);
+  accent-color: var(--shiteki-primary);
   cursor: pointer;
 }
 
-.shiji-settings-actions {
+.shiteki-settings-actions {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
   padding: 0 14px 12px;
+}
+
+/* ── Shortcut Hint ── */
+.shiteki-shortcut-hint {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  background: var(--shiteki-bg);
+  border: 1px solid var(--shiteki-border);
+  border-radius: 8px;
+  box-shadow: var(--shiteki-shadow);
+  font-size: 12px;
+  color: var(--shiteki-text-secondary);
+  white-space: nowrap;
+}
+
+.shiteki-shortcut-hint kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  margin-right: 2px;
+  background: #f3f4f6;
+  border: 1px solid var(--shiteki-border);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--shiteki-text);
+  line-height: 1.4;
+  min-width: 19.5px;
+  text-align: center;
+}
+
+.shiteki-shortcut-hint span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shiteki-shortcut-hint-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--shiteki-text-secondary);
+  cursor: pointer;
+  padding: 0;
+}
+
+.shiteki-shortcut-hint-close:hover {
+  background: #f3f4f6;
 }

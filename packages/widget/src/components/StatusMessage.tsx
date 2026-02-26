@@ -19,7 +19,7 @@ export function StatusMessage({ state, onDismiss }: StatusMessageProps) {
   if (state.status === "success") {
     return (
       <motion.div
-        className="shiji-status shiji-status--success"
+        className="shiteki-status shiteki-status--success"
         initial={{ opacity: 0, y: 12, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 12, scale: 0.95 }}
@@ -36,7 +36,7 @@ export function StatusMessage({ state, onDismiss }: StatusMessageProps) {
   if (state.status === "error") {
     return (
       <motion.div
-        className="shiji-status shiji-status--error"
+        className="shiteki-status shiteki-status--error"
         initial={{ opacity: 0, y: 12, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 12, scale: 0.95 }}
@@ -50,7 +50,7 @@ export function StatusMessage({ state, onDismiss }: StatusMessageProps) {
   if (state.status === "loading") {
     return (
       <motion.div
-        className="shiji-status"
+        className="shiteki-status"
         initial={{ opacity: 0, y: 12, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 12, scale: 0.95 }}

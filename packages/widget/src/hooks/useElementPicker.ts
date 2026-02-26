@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ElementInfo } from "../types";
 import { getElementInfo } from "../utils/getElementInfo";
-import { isShijiElement } from "../utils/isShijiElement";
+import { isShitekiElement } from "../utils/isShitekiElement";
 
 interface UseElementPickerOptions {
   enabled: boolean;
@@ -21,7 +21,7 @@ export function useElementPicker({ enabled, onElementSelected }: UseElementPicke
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const el = document.elementFromPoint(e.clientX, e.clientY);
-    if (!el || isShijiElement(el)) {
+    if (!el || isShitekiElement(el)) {
       setHoveredRect(null);
       return;
     }
@@ -36,7 +36,7 @@ export function useElementPicker({ enabled, onElementSelected }: UseElementPicke
 
   const handleClick = useCallback((e: MouseEvent) => {
     const el = document.elementFromPoint(e.clientX, e.clientY);
-    if (!el || isShijiElement(el)) return;
+    if (!el || isShitekiElement(el)) return;
 
     e.preventDefault();
     e.stopPropagation();

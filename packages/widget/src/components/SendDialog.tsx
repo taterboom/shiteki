@@ -29,7 +29,7 @@ export function SendDialog({ defaultTitle, sending, onConfirm, onCancel }: SendD
 
   return (
     <motion.div
-      className="shiji-popover"
+      className="shiteki-popover"
       style={{
         position: "fixed",
         bottom: 76,
@@ -41,22 +41,22 @@ export function SendDialog({ defaultTitle, sending, onConfirm, onCancel }: SendD
       exit={{ opacity: 0, y: 12 }}
       transition={spring}
     >
-      <div className="shiji-popover-info">
-        <span className="shiji-popover-tag">Create Issue</span>
+      <div className="shiteki-popover-info">
+        <span className="shiteki-popover-tag">Create Issue</span>
       </div>
-      <form className="shiji-popover-form" onSubmit={handleSubmit}>
+      <form className="shiteki-popover-form" onSubmit={handleSubmit}>
         <input
           ref={inputRef}
-          className="shiji-settings-input"
+          className="shiteki-settings-input"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Issue title"
         />
-        <div className="shiji-popover-actions">
+        <div className="shiteki-popover-actions">
           <button
             type="button"
-            className="shiji-btn shiji-btn--ghost"
+            className="shiteki-btn shiteki-btn--ghost"
             onClick={onCancel}
             disabled={sending}
           >
@@ -64,7 +64,7 @@ export function SendDialog({ defaultTitle, sending, onConfirm, onCancel }: SendD
           </button>
           <button
             type="submit"
-            className="shiji-btn shiji-btn--primary"
+            className="shiteki-btn shiteki-btn--primary"
             disabled={!title.trim() || sending}
           >
             {sending ? "Sending…" : "Send"}

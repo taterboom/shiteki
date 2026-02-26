@@ -1,0 +1,1 @@
+- [ ] claude code plugin: 从 repo 中拉取 issue/kanban task，coding 完成后提交 pr 关掉 issue/kanban task。

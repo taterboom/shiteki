@@ -8,19 +8,13 @@ const SPECULAR_LIGHTING_URI =
 
 export function LiquidGlassFilter() {
   return (
-    <>
-  <div>
-    <img src={DISPLACEMENT_MAP_URI} alt="" />
-    <img src={SPECULAR_LIGHTING_URI} alt="" />
-  </div>
-
     <svg
       style={{ position: "absolute", width: 0, height: 0 }}
       aria-hidden="true"
     >
       <defs>
         <filter
-          id="shiji-liquid-glass"
+          id="shiteki-liquid-glass"
           x="-5%"
           y="-5%"
           width="110%"
@@ -82,7 +76,5 @@ export function LiquidGlassFilter() {
         </filter>
       </defs>
     </svg>
-    </>
-    
   );
 }

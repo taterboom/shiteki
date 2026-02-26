@@ -58,7 +58,7 @@ export function AnnotationPopover({ elementInfo, onAdd, onCancel }: AnnotationPo
 
   return (
     <motion.div
-      className="shiji-popover"
+      className="shiteki-popover"
       style={{ top: top + dragOffset.y, left: left + dragOffset.x, transformOrigin: above ? "bottom center" : "top center" }}
       initial={{ opacity: 0, scale: 0.95, y: yOffset }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -66,32 +66,32 @@ export function AnnotationPopover({ elementInfo, onAdd, onCancel }: AnnotationPo
       transition={spring}
     >
       <div
-        className="shiji-popover-info"
+        className="shiteki-popover-info"
         style={{ cursor: "grab" }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
       >
-        <span className="shiji-popover-tag">&lt;{elementInfo.tagName}&gt;</span>
+        <span className="shiteki-popover-tag">&lt;{elementInfo.tagName}&gt;</span>
         {elementInfo.textContent && (
-          <span className="shiji-popover-text">"{elementInfo.textContent}"</span>
+          <span className="shiteki-popover-text">"{elementInfo.textContent}"</span>
         )}
       </div>
 
-      <form className="shiji-popover-form" onSubmit={handleSubmit}>
+      <form className="shiteki-popover-form" onSubmit={handleSubmit}>
         <textarea
           ref={textareaRef}
-          className="shiji-popover-textarea"
+          className="shiteki-popover-textarea"
           placeholder="What should change?"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={3}
         />
-        <div className="shiji-popover-actions">
-          <button type="button" className="shiji-btn shiji-btn--ghost" onClick={onCancel}>
+        <div className="shiteki-popover-actions">
+          <button type="button" className="shiteki-btn shiteki-btn--ghost" onClick={onCancel}>
             Cancel
           </button>
-          <button type="submit" className="shiji-btn shiji-btn--primary" disabled={!comment.trim()}>
+          <button type="submit" className="shiteki-btn shiteki-btn--primary" disabled={!comment.trim()}>
             Add
           </button>
         </div>

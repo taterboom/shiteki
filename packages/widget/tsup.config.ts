@@ -11,10 +11,14 @@ export default defineConfig([
   {
     entry: ["src/standalone.ts"],
     format: ["iife"],
-    globalName: "Shiji",
+    globalName: "Shiteki",
     outExtension: () => ({ js: ".global.js" }),
-    noExternal: ["react", "react-dom"],
+    noExternal: ["react", "react-dom", "motion", "motion/react"],
+    define: { "process.env.NODE_ENV": '"production"' },
     minify: true,
+    esbuildOptions(options) {
+      options.legalComments = "none";
+    },
     injectStyle: true,
   },
 ]);

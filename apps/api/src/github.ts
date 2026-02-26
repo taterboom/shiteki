@@ -12,7 +12,7 @@ export async function createGitHubIssue(
   const { owner, repo, data } = body;
 
   let issueBody = data.body ?? "";
-  issueBody += "\n\n---\n*Submitted via [Shiji](https://github.com/taterboom/shiji)*";
+  issueBody += "\n\n---\n*Submitted via [Shiteki](https://github.com/taterboom/shiteki)*";
 
   const res = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/issues`,
@@ -21,7 +21,7 @@ export async function createGitHubIssue(
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: "application/vnd.github+json",
-        "User-Agent": "shiji-api",
+        "User-Agent": "shiteki-api",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

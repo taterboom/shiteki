@@ -1,4 +1,4 @@
-export interface ShijiConfig {
+export interface ShitekiConfig {
   mode: "endpoint" | "direct";
   endpoint: string;
   githubToken: string;

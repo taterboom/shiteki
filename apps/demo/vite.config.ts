@@ -4,10 +4,11 @@ import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 export default defineConfig({
+  base: "/shiteki/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@shiji/widget": path.resolve(__dirname, "../../packages/widget/src/index.ts"),
+      "@taterboom/shiteki": path.resolve(__dirname, "../../packages/widget/src/index.ts"),
     },
   },
 });

@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { Annotation, ElementInfo } from "../types";
 
-const STORAGE_KEY = "shiji:annotations";
+const STORAGE_KEY = "shiteki:annotations";
 
 interface StoredAnnotations {
   annotations: Annotation[];

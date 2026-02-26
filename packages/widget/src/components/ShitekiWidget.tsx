@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { AnimatePresence } from "motion/react";
-import { ElementInfo, ShijiConfig, WidgetMode } from "../types";
+import { ElementInfo, ShitekiConfig, WidgetMode } from "../types";
 import { useAnnotations } from "../hooks/useAnnotations";
 import { useConfig } from "../hooks/useConfig";
 import { useElementPicker } from "../hooks/useElementPicker";
 import { useSubmit } from "../hooks/useSubmit";
 import { useClipboard } from "../hooks/useClipboard";
+import { useKeyboardShortcuts } from "../hooks/useKeyboardShortcuts";
+import { useShortcutHint } from "../hooks/useShortcutHint";
 import { generatePrompt } from "../utils/generatePrompt";
 import { Toolbar } from "./Toolbar";
 import { ElementHighlight } from "./ElementHighlight";
@@ -15,10 +17,10 @@ import { AnnotationMarkers } from "./AnnotationMarkers";
 import { StatusMessage } from "./StatusMessage";
 import { SettingsPanel } from "./SettingsPanel";
 import { SendDialog } from "./SendDialog";
-import { LiquidGlassFilter } from "./LiquidGlassFilter";
+
 import "../styles/widget.css";
 
-export function ShijiWidget(props: ShijiConfig) {
+export function ShitekiWidget(props: ShitekiConfig) {
   const { config, updateConfig } = useConfig(props);
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<WidgetMode>("idle");
@@ -28,6 +30,7 @@ export function ShijiWidget(props: ShijiConfig) {
   const { annotations, add, remove, clear } = useAnnotations();
   const { state: submitState, submit, reset: resetSubmit } = useSubmit(config);
   const { copied, copy } = useClipboard();
+  const { showHint, dismissHint } = useShortcutHint();
 
   // Clear annotations from localStorage on successful send
   useEffect(() => {
@@ -48,11 +51,20 @@ export function ShijiWidget(props: ShijiConfig) {
 
   const handleOpen = useCallback(() => {
     setOpen(true);
+    setMode("picking");
   }, []);
 
-  const handleTogglePicker = useCallback(() => {
-    setMode((m) => (m === "idle" ? "picking" : "idle"));
-    setSelectedElement(null);
+  const handleToggleOpen = useCallback(() => {
+    setOpen((prev) => {
+      if (prev) {
+        setMode("idle");
+        setSelectedElement(null);
+        setSettingsOpen(false);
+      } else {
+        setMode("picking");
+      }
+      return !prev;
+    });
   }, []);
 
   const handleAddAnnotation = useCallback(
@@ -110,7 +122,7 @@ export function ShijiWidget(props: ShijiConfig) {
   }, []);
 
   const handleSettingsSave = useCallback(
-    (partial: Partial<ShijiConfig>) => {
+    (partial: Partial<ShitekiConfig>) => {
       updateConfig(partial);
       setSettingsOpen(false);
     },
@@ -121,23 +133,38 @@ export function ShijiWidget(props: ShijiConfig) {
     setSettingsOpen(false);
   }, []);
 
+  useKeyboardShortcuts({
+    open,
+    mode,
+    annotationCount: annotations.length,
+    settingsOpen,
+    sendDialogOpen,
+    onCopy: handleCopy,
+    onSend: handleSend,
+    onClear: handleClear,
+    onToggleOpen: handleToggleOpen,
+    onClose: handleClose,
+    onCancelAnnotation: handleCancelAnnotation,
+    onCloseSettings: handleSettingsCancel,
+    onCloseSendDialog: handleSendCancel,
+  });
+
   return ReactDOM.createPortal(
-    <div className="shiji-root">
-      <LiquidGlassFilter />
+    <div className="shiteki-root">
       <Toolbar
         open={open}
-        mode={mode}
         annotationCount={annotations.length}
         copied={copied}
         sending={submitState.status === "loading"}
         settingsOpen={settingsOpen}
         onOpen={handleOpen}
-        onTogglePicker={handleTogglePicker}
         onCopy={handleCopy}
         onSend={handleSend}
         onClear={handleClear}
         onSettings={handleToggleSettings}
         onClose={handleClose}
+        showHint={showHint}
+        onDismissHint={dismissHint}
       />
 
       {open && (

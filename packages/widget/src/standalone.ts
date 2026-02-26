@@ -1,22 +1,22 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { ShijiWidget } from "./components/ShijiWidget";
-import { ShijiConfig } from "./types";
+import { ShitekiWidget } from "./components/ShitekiWidget";
+import { ShitekiConfig } from "./types";
 
-export function mount(config: ShijiConfig, el?: HTMLElement) {
+export function mount(config: ShitekiConfig, el?: HTMLElement) {
   const container = el ?? document.createElement("div");
   if (!el) {
-    container.id = "shiji-widget";
+    container.id = "shiteki-widget";
     document.body.appendChild(container);
   }
   const root = createRoot(container);
-  root.render(React.createElement(ShijiWidget, config));
+  root.render(React.createElement(ShitekiWidget, config));
   return root;
 }
 
-// Auto-mount from script data-* attributes
 function autoMount() {
-  const script = document.currentScript as HTMLScriptElement | null;
+  // document.currentScript is null in ES modules / Vite dev, so query by data attribute
+  const script = document.querySelector("script[data-owner][data-repo]") as HTMLScriptElement | null;
   if (!script) return;
 
   const owner = script.dataset.owner;
