@@ -2,11 +2,33 @@
 
 Lightweight visual annotation widget that turns user feedback into GitHub Issues. Drop a floating button onto any site — users click elements, add comments, and it becomes a structured GitHub Issue.
 
-## How It Works
+## Quick Start
 
+```bash
+npm install @taterboom/shiteki
 ```
-User clicks widget → picks elements → adds comments → GitHub Issue created
+
+```tsx
+import { ShitekiWidget } from "@taterboom/shiteki";
+
+<ShitekiWidget
+  endpoint="https://your-api.workers.dev"
+  owner="your-github-username"
+  repo="your-repo"
+/>
 ```
+
+Or drop a single script tag (no build step):
+
+```html
+<script src="https://unpkg.com/@taterboom/shiteki/dist/standalone.global.js"
+  data-endpoint="https://your-api.workers.dev"
+  data-owner="your-github-username"
+  data-repo="your-repo"
+></script>
+```
+
+See [full documentation](packages/widget/) for all config options, theming, and usage modes.
 
 ## Packages
 
