@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy": "vite build && npx gh-pages -d dist"
+    "deploy": "vite build && npx gh-pages -d dist --no-history"
   },
   "dependencies": {
     "@taterboom/shiteki": "workspace:*",
