@@ -41,6 +41,7 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
           prompt: |
             Read the GitHub Issue below and implement the requested changes.
             The issue was created by the Shiteki annotation tool — it contains

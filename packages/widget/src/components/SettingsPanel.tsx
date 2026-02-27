@@ -92,6 +92,11 @@ export function SettingsPanel({ config, onSave, onCancel }: SettingsPanelProps) 
               <span>Direct</span>
             </label>
           </div>
+          {mode === "direct" && (
+            <p className="shiteki-settings-warning">
+              ⚠️ Direct mode stores your GitHub token in the browser via localStorage. For security, use Endpoint mode.
+            </p>
+          )}
         </div>
 
         {mode === "endpoint" ? (

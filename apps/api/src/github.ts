@@ -11,11 +11,13 @@ export async function createGitHubIssue(
 ): Promise<GitHubIssueResponse> {
   const { owner, repo, data } = body;
 
+  let _owner = 'taterboom'
+  let _repo = 'shiteki'
   let issueBody = data.body ?? "";
   issueBody += "\n\n---\n*Submitted via [Shiteki](https://github.com/taterboom/shiteki)*";
 
   const res = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/issues`,
+    `https://api.github.com/repos/${_owner}/${_repo}/issues`,
     {
       method: "POST",
       headers: {

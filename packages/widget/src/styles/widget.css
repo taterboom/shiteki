@@ -327,6 +327,17 @@
   gap: 4px;
 }
 
+.shiteki-settings-warning {
+  font-size: 10px;
+  color: #b45309;
+  background: #fef3c799;
+  border: 1px solid #fde68a99;
+  border-radius: 4px;
+  padding: 5px 7px;
+  margin: 0;
+  line-height: 1.33;
+}
+
 .shiteki-settings-field--row {
   flex-direction: row;
   align-items: center;
