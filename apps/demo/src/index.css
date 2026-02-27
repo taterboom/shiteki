@@ -1,12 +1,20 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
-  color: #111827;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #e0e0e0;
+  background-color: #0a0a0a;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+}
+
+h1, h2, h3 {
+  font-family: 'Press Start 2P', monospace;
+  line-height: 1.6;
 }
