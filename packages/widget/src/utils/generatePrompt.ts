@@ -13,13 +13,13 @@ export function generatePrompt(annotations: Annotation[]): string {
     `**Captured:** ${now}`,
   ];
 
-  for (const ann of annotations) {
+  annotations.forEach((ann, i) => {
     const { elementInfo: el } = ann;
     lines.push(
       "",
       "---",
       "",
-      `## Annotation #${ann.id}`,
+      `## Annotation #${i + 1}`,
       "",
       "**What should change:**",
       `> ${ann.comment}`,
@@ -34,7 +34,7 @@ export function generatePrompt(annotations: Annotation[]): string {
     if (attrEntries.length > 0) {
       lines.push(`- Attributes: ${attrEntries.map(([k, v]) => `\`${k}="${v}"\``).join(", ")}`);
     }
-  }
+  });
 
   lines.push("");
   return lines.join("\n");

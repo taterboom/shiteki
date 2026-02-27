@@ -21,10 +21,9 @@ import { ShitekiWidget } from "@taterboom/shiteki";
 Or drop a single script tag (no build step):
 
 ```html
-<script src="https://unpkg.com/@taterboom/shiteki/dist/standalone.global.js"
-  data-endpoint="https://your-api.workers.dev"
-  data-owner="your-github-username"
-  data-repo="your-repo"
+<script
+  src="https://unpkg.com/@taterboom/shiteki/dist/standalone.global.js"
+  data-shiteki='{"endpoint":"https://your-api.workers.dev","owner":"your-github-username","repo":"your-repo"}'
 ></script>
 ```
 

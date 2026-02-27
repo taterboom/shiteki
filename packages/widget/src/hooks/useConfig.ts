@@ -21,6 +21,7 @@ function merge(defaults: ShitekiConfig, stored: Partial<ShitekiConfig> | null): 
     owner: stored.owner || defaults.owner,
     repo: stored.repo || defaults.repo,
     labels: stored.labels ?? defaults.labels,
+    clearAfterCopy: stored.clearAfterCopy ?? defaults.clearAfterCopy,
   };
 }
 

@@ -7,6 +7,7 @@ interface ToolbarProps {
   annotationCount: number;
   copied: boolean;
   sending: boolean;
+  canSend: boolean;
   settingsOpen: boolean;
   onOpen: () => void;
   onCopy: () => void;
@@ -23,6 +24,7 @@ export function Toolbar({
   annotationCount,
   copied,
   sending,
+  canSend,
   settingsOpen,
   onOpen,
   onCopy,
@@ -102,48 +104,42 @@ export function Toolbar({
             style={{ overflow: "hidden", display: "flex", alignItems: "center", gap: 4 }}
           >
             {/* Separator */}
-            {annotationCount > 0 && <div className="shiteki-toolbar-sep" />}
+            <div className="shiteki-toolbar-sep" />
 
             {/* Copy */}
-            {annotationCount > 0 && (
-              <button className="shiteki-toolbar-btn" onClick={onCopy} title="Copy to clipboard">
-                {copied ? (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                ) : (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                  </svg>
-                )}
-              </button>
-            )}
+            <button className="shiteki-toolbar-btn" onClick={onCopy} disabled={annotationCount === 0} title="Copy to clipboard">
+              {copied ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              )}
+            </button>
 
             {/* Send */}
-            {annotationCount > 0 && (
-              <button
-                className="shiteki-toolbar-btn"
-                onClick={onSend}
-                disabled={sending}
-                title="Send as GitHub Issue"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13" />
-                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                </svg>
-              </button>
-            )}
+            <button
+              className="shiteki-toolbar-btn"
+              onClick={canSend ? onSend : onSettings}
+              disabled={sending || annotationCount === 0}
+              title={canSend ? "Send as GitHub Issue" : "Configure settings to enable send"}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </button>
 
             {/* Clear */}
-            {annotationCount > 0 && (
-              <button className="shiteki-toolbar-btn" onClick={onClear} title="Clear all annotations">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="3 6 5 6 21 6" />
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                </svg>
-              </button>
-            )}
+            <button className="shiteki-toolbar-btn" onClick={onClear} disabled={annotationCount === 0} title="Clear all annotations">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="3 6 5 6 21 6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+              </svg>
+            </button>
 
             {/* Settings */}
             <button
@@ -182,18 +178,19 @@ export function Toolbar({
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.15 }}
           >
-            <span>
-              <kbd>X</kbd> Toggle
-              <kbd>C</kbd> Copy
-              <kbd>S</kbd> Send
-              <kbd>DD</kbd> Clear
-            </span>
             <button className="shiteki-shortcut-hint-close" onClick={onDismissHint} aria-label="Dismiss">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
+            <div className="shiteki-shortcut-hint-list">
+              <span><kbd>X</kbd> Toggle</span>
+              <span><kbd>C</kbd> Copy</span>
+              <span><kbd>S</kbd> Send</span>
+              <span><kbd>DD</kbd> Clear</span>
+              <span><kbd>{navigator.userAgent.includes("Mac") ? "⌘" : "Ctrl"}+Click</kbd> Remove</span>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

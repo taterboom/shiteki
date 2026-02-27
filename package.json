@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm -r build",
+    "build:widget": "pnpm --filter @taterboom/shiteki build",
     "dev:api": "pnpm --filter shiteki-api dev",
     "dev:demo": "pnpm --filter shiteki-demo dev",
     "dev:widget": "pnpm --filter @taterboom/shiteki dev"

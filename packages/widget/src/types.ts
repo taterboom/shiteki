@@ -5,6 +5,7 @@ export interface ShitekiConfig {
   owner: string;
   repo: string;
   labels?: string[];
+  clearAfterCopy?: boolean;
 }
 
 export interface ElementInfo {

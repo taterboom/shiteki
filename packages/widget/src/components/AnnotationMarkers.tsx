@@ -6,10 +6,10 @@ import { AnnotationMarker } from "./AnnotationMarker";
 
 interface AnnotationMarkersProps {
   annotations: Annotation[];
-  onRemove: (id: number) => void;
+  onClick: (id: number, e: React.MouseEvent) => void;
 }
 
-export function AnnotationMarkers({ annotations, onRemove }: AnnotationMarkersProps) {
+export function AnnotationMarkers({ annotations, onClick }: AnnotationMarkersProps) {
   const positions = useMarkerPositions(annotations);
 
   return (
@@ -18,9 +18,10 @@ export function AnnotationMarkers({ annotations, onRemove }: AnnotationMarkersPr
         <AnnotationMarker
           key={pos.id}
           id={pos.id}
+          index={pos.index}
           top={pos.top}
           left={pos.left}
-          onRemove={onRemove}
+          onClick={onClick}
         />
       ))}
     </AnimatePresence>

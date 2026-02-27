@@ -3,6 +3,33 @@ import { motion } from "motion/react";
 import { spring } from "../utils/spring";
 import { ShitekiConfig } from "../types";
 
+function HelpLink({ href }: { href: string }) {
+  return (
+    <a
+      className="shiteki-settings-help"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
+        <text
+          x="8"
+          y="11.5"
+          textAnchor="middle"
+          fill="currentColor"
+          fontSize="10"
+          fontWeight="600"
+          fontFamily="inherit"
+        >
+          ?
+        </text>
+      </svg>
+    </a>
+  );
+}
+
 interface SettingsPanelProps {
   config: ShitekiConfig;
   onSave: (partial: Partial<ShitekiConfig>) => void;
@@ -16,6 +43,7 @@ export function SettingsPanel({ config, onSave, onCancel }: SettingsPanelProps) 
   const [owner, setOwner] = useState(config.owner);
   const [repo, setRepo] = useState(config.repo);
   const [labels, setLabels] = useState((config.labels ?? []).join(", "));
+  const [clearAfterCopy, setClearAfterCopy] = useState(config.clearAfterCopy ?? false);
 
   const handleSave = useCallback(() => {
     onSave({
@@ -28,8 +56,9 @@ export function SettingsPanel({ config, onSave, onCancel }: SettingsPanelProps) 
         .split(",")
         .map((l) => l.trim())
         .filter(Boolean),
+      clearAfterCopy,
     });
-  }, [mode, endpoint, githubToken, owner, repo, labels, onSave]);
+  }, [mode, endpoint, githubToken, owner, repo, labels, clearAfterCopy, onSave]);
 
   return (
     <motion.div
@@ -67,7 +96,10 @@ export function SettingsPanel({ config, onSave, onCancel }: SettingsPanelProps) 
 
         {mode === "endpoint" ? (
           <label className="shiteki-settings-field">
-            <span className="shiteki-settings-label">Endpoint</span>
+            <span className="shiteki-settings-label">
+              Endpoint
+              <HelpLink href="https://github.com/taterboom/shiteki/tree/main/apps/api" />
+            </span>
             <input
               className="shiteki-settings-input"
               type="text"
@@ -78,7 +110,10 @@ export function SettingsPanel({ config, onSave, onCancel }: SettingsPanelProps) 
           </label>
         ) : (
           <label className="shiteki-settings-field">
-            <span className="shiteki-settings-label">GitHub Token</span>
+            <span className="shiteki-settings-label">
+              GitHub Token
+              <HelpLink href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" />
+            </span>
             <input
               className="shiteki-settings-input"
               type="password"
@@ -110,13 +145,26 @@ export function SettingsPanel({ config, onSave, onCancel }: SettingsPanelProps) 
           />
         </label>
         <label className="shiteki-settings-field">
-          <span className="shiteki-settings-label">Labels</span>
+          <span className="shiteki-settings-label">
+            Labels
+            <HelpLink href="https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels" />
+          </span>
           <input
             className="shiteki-settings-input"
             type="text"
             value={labels}
             onChange={(e) => setLabels(e.target.value)}
             placeholder="bug, feedback"
+          />
+        </label>
+
+        <label className="shiteki-settings-field shiteki-settings-field--row">
+          <span className="shiteki-settings-label">Clear after copy</span>
+          <input
+            type="checkbox"
+            className="shiteki-settings-checkbox"
+            checked={clearAfterCopy}
+            onChange={(e) => setClearAfterCopy(e.target.checked)}
           />
         </label>
       </div>

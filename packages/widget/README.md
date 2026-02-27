@@ -35,13 +35,21 @@ function App() {
 
 ### Standalone (CDN with auto-mount)
 
+Add a `data-shiteki` attribute with a JSON config:
+
 ```html
 <script
   src="https://unpkg.com/@taterboom/shiteki/dist/standalone.global.js"
-  data-endpoint="https://your-api.workers.dev"
-  data-owner="your-github-username"
-  data-repo="your-repo"
-  data-labels="feedback"
+  data-shiteki='{"endpoint":"https://your-api.workers.dev","owner":"your-github-username","repo":"your-repo"}'
+></script>
+```
+
+You can also mount with no config — the widget will load with annotation & copy features enabled, but send will be disabled until configured via settings:
+
+```html
+<script
+  src="https://unpkg.com/@taterboom/shiteki/dist/standalone.global.js"
+  data-shiteki
 ></script>
 ```
 
@@ -57,6 +65,8 @@ function App() {
   });
 </script>
 ```
+
+`Shiteki.mount()` can also be called with no arguments.
 
 ## Config
 

@@ -5,6 +5,7 @@ interface UseKeyboardShortcutsOptions {
   open: boolean;
   mode: WidgetMode;
   annotationCount: number;
+  canSend: boolean;
   settingsOpen: boolean;
   sendDialogOpen: boolean;
   onCopy: () => void;
@@ -66,7 +67,7 @@ export function useKeyboardShortcuts(opts: UseKeyboardShortcutsOptions) {
       if (key === "c" && opts.annotationCount > 0) {
         e.preventDefault();
         opts.onCopy();
-      } else if (key === "s" && opts.annotationCount > 0) {
+      } else if (key === "s" && opts.annotationCount > 0 && opts.canSend) {
         e.preventDefault();
         opts.onSend();
       } else if (key === "d" && opts.annotationCount > 0) {
@@ -87,6 +88,7 @@ export function useKeyboardShortcuts(opts: UseKeyboardShortcutsOptions) {
     opts.open,
     opts.mode,
     opts.annotationCount,
+    opts.canSend,
     opts.settingsOpen,
     opts.sendDialogOpen,
     opts.onCopy,

@@ -3,6 +3,7 @@ import { Annotation } from "../types";
 
 interface MarkerPosition {
   id: number;
+  index: number;
   top: number;
   left: number;
 }
@@ -12,15 +13,16 @@ export function useMarkerPositions(annotations: Annotation[]): MarkerPosition[] 
 
   useEffect(() => {
     function update() {
-      const newPositions = annotations.map((ann) => {
+      const newPositions = annotations.map((ann, i) => {
+        const index = i + 1;
         const el = document.querySelector(ann.elementInfo.selector);
         if (el) {
           const rect = el.getBoundingClientRect();
-          return { id: ann.id, top: rect.top, left: rect.left + rect.width };
+          return { id: ann.id, index, top: rect.top, left: rect.left + rect.width };
         }
         // Fallback to stored rect
         const r = ann.elementInfo.rect;
-        return { id: ann.id, top: r.top, left: r.left + r.width };
+        return { id: ann.id, index, top: r.top, left: r.left + r.width };
       });
       setPositions(newPositions);
     }

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { AnimatePresence } from "motion/react";
-import { ElementInfo, ShitekiConfig, WidgetMode } from "../types";
+import { Annotation, ElementInfo, ShitekiConfig, WidgetMode } from "../types";
 import { useAnnotations } from "../hooks/useAnnotations";
 import { useConfig } from "../hooks/useConfig";
 import { useElementPicker } from "../hooks/useElementPicker";
@@ -13,6 +13,7 @@ import { generatePrompt } from "../utils/generatePrompt";
 import { Toolbar } from "./Toolbar";
 import { ElementHighlight } from "./ElementHighlight";
 import { AnnotationPopover } from "./AnnotationPopover";
+import { AnnotationDetailPopover } from "./AnnotationDetailPopover";
 import { AnnotationMarkers } from "./AnnotationMarkers";
 import { StatusMessage } from "./StatusMessage";
 import { SettingsPanel } from "./SettingsPanel";
@@ -27,7 +28,8 @@ export function ShitekiWidget(props: ShitekiConfig) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [sendDialogOpen, setSendDialogOpen] = useState(false);
   const [selectedElement, setSelectedElement] = useState<ElementInfo | null>(null);
-  const { annotations, add, remove, clear } = useAnnotations();
+  const [viewingAnnotation, setViewingAnnotation] = useState<Annotation | null>(null);
+  const { annotations, add, update, remove, clear } = useAnnotations();
   const { state: submitState, submit, reset: resetSubmit } = useSubmit(config);
   const { copied, copy } = useClipboard();
   const { showHint, dismissHint } = useShortcutHint();
@@ -83,10 +85,47 @@ export function ShitekiWidget(props: ShitekiConfig) {
     setMode("picking");
   }, []);
 
+  const handleMarkerClick = useCallback(
+    (id: number, e: React.MouseEvent) => {
+      if (e.metaKey || e.ctrlKey) {
+        remove(id);
+      } else {
+        const ann = annotations.find((a) => a.id === id);
+        if (ann) setViewingAnnotation(ann);
+      }
+    },
+    [annotations, remove]
+  );
+
+  const handleCloseViewing = useCallback(() => {
+    setViewingAnnotation(null);
+  }, []);
+
+  const handleUpdateViewing = useCallback(
+    (comment: string) => {
+      if (viewingAnnotation) {
+        update(viewingAnnotation.id, comment);
+        setViewingAnnotation(null);
+      }
+    },
+    [viewingAnnotation, update]
+  );
+
+  const handleRemoveViewing = useCallback(() => {
+    if (viewingAnnotation) {
+      remove(viewingAnnotation.id);
+      setViewingAnnotation(null);
+    }
+  }, [viewingAnnotation, remove]);
+
   const handleCopy = useCallback(() => {
     const prompt = generatePrompt(annotations);
     copy(prompt);
-  }, [annotations, copy]);
+    if (config.clearAfterCopy) {
+      clear();
+      setSelectedElement(null);
+    }
+  }, [annotations, copy, config.clearAfterCopy, clear]);
 
   const handleSend = useCallback(() => {
     setSendDialogOpen(true);
@@ -108,12 +147,14 @@ export function ShitekiWidget(props: ShitekiConfig) {
   const handleClear = useCallback(() => {
     clear();
     setSelectedElement(null);
+    setViewingAnnotation(null);
   }, [clear]);
 
   const handleClose = useCallback(() => {
     setOpen(false);
     setMode("idle");
     setSelectedElement(null);
+    setViewingAnnotation(null);
     setSettingsOpen(false);
   }, []);
 
@@ -132,11 +173,19 @@ export function ShitekiWidget(props: ShitekiConfig) {
   const handleSettingsCancel = useCallback(() => {
     setSettingsOpen(false);
   }, []);
-
+  
+  const canSend =
+    config.owner.trim() !== "" &&
+    config.repo.trim() !== "" &&
+    (config.mode === "endpoint"
+      ? config.endpoint.trim() !== ""
+      : config.githubToken.trim() !== "");
+  
   useKeyboardShortcuts({
     open,
     mode,
     annotationCount: annotations.length,
+    canSend,
     settingsOpen,
     sendDialogOpen,
     onCopy: handleCopy,
@@ -156,6 +205,7 @@ export function ShitekiWidget(props: ShitekiConfig) {
         annotationCount={annotations.length}
         copied={copied}
         sending={submitState.status === "loading"}
+        canSend={canSend}
         settingsOpen={settingsOpen}
         onOpen={handleOpen}
         onCopy={handleCopy}
@@ -182,7 +232,20 @@ export function ShitekiWidget(props: ShitekiConfig) {
             )}
           </AnimatePresence>
 
-          <AnnotationMarkers annotations={annotations} onRemove={remove} />
+          <AnnotationMarkers annotations={annotations} onClick={handleMarkerClick} />
+
+          <AnimatePresence>
+            {viewingAnnotation && (
+              <AnnotationDetailPopover
+                key="detail"
+                annotation={viewingAnnotation}
+                index={annotations.findIndex((a) => a.id === viewingAnnotation.id) + 1}
+                onUpdate={handleUpdateViewing}
+                onRemove={handleRemoveViewing}
+                onClose={handleCloseViewing}
+              />
+            )}
+          </AnimatePresence>
 
           <AnimatePresence>
             {settingsOpen && (

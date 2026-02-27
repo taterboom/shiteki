@@ -53,6 +53,14 @@ export function useAnnotations() {
     return annotation;
   }, []);
 
+  const update = useCallback((id: number, comment: string) => {
+    setAnnotations((prev) => {
+      const next = prev.map((a) => (a.id === id ? { ...a, comment } : a));
+      writeStored(next, nextIdRef.current);
+      return next;
+    });
+  }, []);
+
   const remove = useCallback((id: number) => {
     setAnnotations((prev) => {
       const next = prev.filter((a) => a.id !== id);
@@ -67,5 +75,5 @@ export function useAnnotations() {
     removeStored();
   }, []);
 
-  return { annotations, add, remove, clear };
+  return { annotations, add, update, remove, clear };
 }
