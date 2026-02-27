@@ -362,7 +362,7 @@ export function App() {
         githubToken=""
         owner="taterboom"
         repo="shiteki"
-        labels={["demo"]}
+        labels={["shiteki"]}
       />
     </div>
   );

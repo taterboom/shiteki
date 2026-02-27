@@ -2,10 +2,18 @@ name: Handle Shiteki Feedback
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue number to process'
+        required: true
+        type: number
 
 jobs:
   fix:
-    if: contains(github.event.issue.labels.*.name, 'shiteki') || contains(github.event.issue.labels.*.name, 'feedback')
+    if: |
+      (github.event_name == 'issues' && (contains(github.event.issue.labels.*.name, 'shiteki') || contains(github.event.issue.labels.*.name, 'feedback'))) ||
+      github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -13,6 +21,22 @@ jobs:
       issues: write
     steps:
       - uses: actions/checkout@v4
+      - name: Get issue data
+        id: issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ISSUE_NUMBER="${{ github.event.inputs.issue_number }}"
+          else
+            ISSUE_NUMBER="${{ github.event.issue.number }}"
+          fi
+          TITLE=$(gh issue view "$ISSUE_NUMBER" --json title -q '.title')
+          BODY=$(gh issue view "$ISSUE_NUMBER" --json body -q '.body')
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
       - uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -22,5 +46,5 @@ jobs:
             element selectors, screenshots, and user comments describing UI feedback.
             Create a PR with the fixes.
 
-            Issue: ${{ github.event.issue.title }}
-            Body: ${{ github.event.issue.body }}
+            Issue: ${{ steps.issue.outputs.title }}
+            Body: ${{ steps.issue.outputs.body }}
