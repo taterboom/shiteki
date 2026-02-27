@@ -116,10 +116,10 @@ export function App() {
       {/* Features */}
       <section id="features" className="py-16 max-w-5xl mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-          {FEATURES.map((f) => (
+          {FEATURES.map((f, i) => (
             <div
               key={f.title}
-              className="p-4 rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-gray-50 transition"
+              className={`${i === 1 ? "p-6" : "p-4"} rounded-xl border border-gray-100 bg-gray-50/50 hover:bg-gray-50 transition`}
             >
               <div className="flex items-center gap-2">
                 <span className="text-xl">{f.emoji}</span>
