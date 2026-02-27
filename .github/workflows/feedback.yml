@@ -1,8 +1,3 @@
-- [ ] claude code plugin: pull issue/kanban task, coding, then close issue/kanban task。
-
-- GitHub Action auto issue killer
-
-# .github/workflows/shiteki-claude.yml
 name: Handle Shiteki Feedback
 on:
   issues:
