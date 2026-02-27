@@ -1,6 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { spring } from "../utils/spring";
+import { Logo } from "./Logo";
 
 interface ToolbarProps {
   open: boolean;
@@ -64,7 +65,7 @@ export function Toolbar({
       whileHover={!open ? { scale: 1.08, boxShadow: "0 4px 20px rgba(37, 99, 235, 0.4)" } : undefined}
       whileTap={!open ? { scale: 0.95 } : undefined}
     >
-      {/* Crosshair icon with badge */}
+      {/* Logo icon with badge */}
       <div className="shiteki-toolbar-picker">
         <motion.div
           className={`shiteki-toolbar-btn ${open ? "shiteki-toolbar-btn--active" : ""}`}
@@ -72,13 +73,7 @@ export function Toolbar({
           whileTap={{ scale: 0.9 }}
           style={!open ? { color: "#fff", pointerEvents: "none" } : { pointerEvents: "none" }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="2" x2="12" y2="6" />
-            <line x1="12" y1="18" x2="12" y2="22" />
-            <line x1="2" y1="12" x2="6" y2="12" />
-            <line x1="18" y1="12" x2="22" y2="12" />
-          </svg>
+          <Logo />
         </motion.div>
         {open && annotationCount > 0 && (
           <motion.span
