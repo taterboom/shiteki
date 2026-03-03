@@ -2,6 +2,8 @@
 
 Web annotation widget that closes the feedback loop with AI. Click any element, add a comment — then either paste the structured prompt into Claude Code, or send it as a GitHub Issue for `/fix-issue` to handle automatically.
 
+![Demo](assets/demo.gif)
+
 ## How It Works
 
 ```
